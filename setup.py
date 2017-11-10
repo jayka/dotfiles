@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os, sys
-
+import time
 
 spmacs = [".emacs.d", ".spacemacs.d"]
 
@@ -13,7 +13,6 @@ def symlnk_and_backup(sdir):
 
     if( os.path.lexists(symlink)):  # symlink exists
         backup_dir = symlink + ".bak_" + str(int(round(time.time() * 1000000)))
-        print(backup_dir)
         os.rename(symlink, backup_dir)   # create a backup
         print(symlink + " exists. Created backup " + backup_dir)
         
