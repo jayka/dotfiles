@@ -23,3 +23,6 @@ def symlnk_and_backup(sdir):
 
 for d in spmacs:
     symlnk_and_backup(d)
+
+print("\nFor javascript mode, run: npm install -g tern")
+print("For Haskell, download and install GHC")
