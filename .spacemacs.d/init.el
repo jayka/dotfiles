@@ -31,32 +31,38 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     python
      html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ivy
+     ;; helm
+     (ivy :variables
+          ivy-virtual-abbreviate 'full
+          ivy-display-style 'fancy)
      (themes-megapack :packages twilight-anti-bright)
      auto-completion
      ;; better-defaults
      emacs-lisp
      csv
-     ;; git
+     git
+     github
      markdown
      org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+      (shell :variables
+             shell-default-height 30
+             shell-default-position 'bottom
+             shell-default-shell 'eshell)
      ;; spell-checking
      syntax-checking
-     ;; version-control
+     version-control
      ;; Languages
      javascript
      haskell
      clojure
+     go
+     python 
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
