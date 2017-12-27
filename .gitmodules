@@ -4,3 +4,6 @@
 [submodule "powerline-shell"]
 	path = powerline-shell
 	url = git@github.com:banga/powerline-shell.git
+[submodule "a3b4a6bb92a8e4b9fd487e77f2aa8b64"]
+	path = a3b4a6bb92a8e4b9fd487e77f2aa8b64
+	url = git@gist.github.com:a3b4a6bb92a8e4b9fd487e77f2aa8b64.git
