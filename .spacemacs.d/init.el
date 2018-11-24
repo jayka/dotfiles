@@ -31,17 +31,19 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     shell-scripts
+     ruby
      html
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; helm
-     (ivy :variables
-          ivy-virtual-abbreviate 'full
-          ivy-display-style 'fancy)
-     (themes-megapack :packages twilight-anti-bright)
+     helm
+     ;; (ivy :variables
+     ;;      ivy-virtual-abbreviate 'full
+     ;;      ivy-display-style 'fancy)
+     themes-megapack
      auto-completion
      ;; better-defaults
      emacs-lisp
@@ -62,17 +64,22 @@ values."
      haskell
      clojure
      go
-     python 
+     python
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(all-the-icons)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(firebelly-theme
+                                    niflheim-theme
+                                    pastels-on-dark-theme
+                                    tronesque-theme
+                                    zonokai-theme)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -140,15 +147,17 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(smyx seti monokai naquadah
+                                  madhat2r jbeans jazz ir-black inkpot hc-zenburn gruvbox-dark-hard gruvbox-dark-medium gruvbox-dark-soft
+                                  gruvbox gruber-darker grandshell gotham farmhouse-dark dracula darktooth darkokai darkmine darkburn cyberpunk sanityinc-tomorrow-bright
+                                  sanityinc-tomorrow-eighties clues bubbleberry badwolf ample-zen alect-black-alt afternoon ample)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :height 110
-                               :weight regular
+                               :size 11
+                               :weight normal
                                :width normal
                                :powerline-scale 1.1)
    ;; The leader key
@@ -273,7 +282,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -315,8 +324,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq custom-file (concat (file-name-directory load-file-name) "customize.el"))
-  (setq-default
-   dotspacemacs-themes '(twilight-anti-bright))
+ ;; (setq-default dotspacemacs-themes '(flatland))
   )
 
 (defun dotspacemacs/user-config ()
@@ -336,4 +344,19 @@ you should place your code here."
    )
   (setq powerline-default-separator 'arrow)
   (setq ns-use-srgb-colorspace nil)
+
+  ;; tab widths
+  (setq go-tab-width 2)
+  ;; find undo
+  (setq evil-want-fine-undo "Very Fine")
+  ;; (fringe-mode '(2 . 2))
+
+  ;; customize title bar
+  (add-to-list 'default-frame-alist
+               '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist
+               '(ns-appearance . dark))
+
+  ;; neoTree configurations
+  (setq neo-theme 'icons)
   )
