@@ -39,11 +39,12 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
-     ;; (ivy :variables
-     ;;      ivy-virtual-abbreviate 'full
-     ;;      ivy-display-style 'fancy)
+     ;; helm
+     (ivy :variables
+          ivy-virtual-abbreviate 'full
+          ivy-display-style 'fancy)
      themes-megapack
+     theming
      auto-completion
      ;; better-defaults
      emacs-lisp
@@ -62,7 +63,8 @@ values."
      ;; Languages
      javascript
      haskell
-     clojure
+     (clojure :variables
+              clojure-enable-clj-refactor t)
      go
      python
      yaml
@@ -71,7 +73,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(all-the-icons)
+   dotspacemacs-additional-packages '(all-the-icons exec-path-from-shell)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -123,6 +125,7 @@ values."
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
+   dotspacemacs-mode-line-theme 'spacemacs
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -147,16 +150,13 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(smyx seti monokai naquadah
-                                  madhat2r jbeans jazz ir-black inkpot hc-zenburn gruvbox-dark-hard gruvbox-dark-medium gruvbox-dark-soft
-                                  gruvbox gruber-darker grandshell gotham farmhouse-dark dracula darktooth darkokai darkmine darkburn cyberpunk sanityinc-tomorrow-bright
-                                  sanityinc-tomorrow-eighties clues bubbleberry badwolf ample-zen alect-black-alt afternoon ample)
+   dotspacemacs-themes '(smyx gruvbox flatland)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 11
+   dotspacemacs-default-font '("Fira Code"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -190,7 +190,7 @@ values."
    dotspacemacs-retain-visual-state-on-shift t
    ;; If non-nil, J and K move lines up and down when in visual mode.
    ;; (default nil)
-   dotspacemacs-visual-line-move-text nil
+   dotspacemacs-visual-line-move-text t
    ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
    ;; (default nil)
    dotspacemacs-ex-substitute-global nil
@@ -201,7 +201,7 @@ values."
    dotspacemacs-display-default-layout nil
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
@@ -323,6 +323,10 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq theming-modifications
+        '((smyx
+           (hl-line :background "#202020"))))
+
   (setq custom-file (concat (file-name-directory load-file-name) "customize.el"))
  ;; (setq-default dotspacemacs-themes '(flatland))
   )
@@ -335,6 +339,7 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  (exec-path-from-shell-initialize)
   ;; I prefer cmd key for meta
   (setq-default
    mac-option-key-is-meta nil
@@ -359,4 +364,10 @@ you should place your code here."
 
   ;; neoTree configurations
   (setq neo-theme 'icons)
+  (if (fboundp 'mac-auto-operator-composition-mode)
+      mac-auto-operator-composition-mode)
+
+  (setq jit-lock-defer-time 0)
+  (setq fast-but-imprecise-scrolling t)
+
   )
