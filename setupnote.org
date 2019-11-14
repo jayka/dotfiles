@@ -1,8 +1,16 @@
 #+PROPERTY: header-args :results output silent
 #+PROPERTY: header-args :tangle yes
 
+* Setup
+  - To setup you must have Emacs downloaded. 
+  - Run the following command to untangle this Org file.
+  #+begin_src sh :tangle no
+  ~/Applications/Emacs.app/Contents/MacOS/Emacs -nw --batch -l org setupnote.org -f org-babel-tangle
+  #+end_src
+  - In Terminal, run ~./setupnote.sh~
+
 * Install HomeBrew
-  Some utilities for the script
+** Some utilities for the script
   #+begin_src sh :shebang "#!/bin/bash"
   Y='\033[1;33m'
   NC='\033[0m'
@@ -12,7 +20,7 @@
     echo -e "${Y}${text}${NC}"
   }
   #+end_src
-  Install Homebrew
+** Install Homebrew
   #+begin_src sh
   if ! command -v brew ; then
     prn "Installing Homebrew"
@@ -82,7 +90,7 @@
 
 EOD
 
-  #+End_src
+  #+end_src
 
 * Install Git
   
@@ -91,13 +99,13 @@ EOD
   brew install git
   #+end_src
 
-* Install fishshell
+* Install fish shell
   #+begin_src sh
   prn "Installing fish"
   brew install fish
   #+end_src
    
-  Set fish as default shell
+** Set fish as default shell
   #+begin_src sh
   currentshell=$(echo $SHELL | tr '/' '\n' | tail -n1)
    
@@ -123,6 +131,14 @@ EOD
     echo (set_color -o yellow)$argv(set_color normal)
   end
   #+end_src
+* Link my fish functions
+  #+begin_src fish
+  set fn_dir "./fish/functions"
+  for i in (ls $fn_dir)
+    ln -s "$fn_dir/$i" "~/.config/fish/functions/$i"
+  end
+  #+end_src
+
 * Install OMF
   #+begin_src fish
   if ! type -q omf
@@ -149,4 +165,3 @@ EOD
    omf install bobthefish
    omf reload
    #+end_src
-* Setup jayemacs
