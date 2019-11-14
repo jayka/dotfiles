@@ -9,6 +9,12 @@
   #+end_src
   - In Terminal, run ~./setupnote.sh~
 
+* Setup Personal Details
+  #+begin_src sh
+  read -p "Enter name: " user_name
+  read -p "Enter email: " user_email
+  #+end_src
+
 * Install HomeBrew
 ** Some utilities for the script
   #+begin_src sh :shebang "#!/bin/bash"
@@ -20,6 +26,7 @@
     echo -e "${Y}${text}${NC}"
   }
   #+end_src
+
 ** Install Homebrew
   #+begin_src sh
   if ! command -v brew ; then
@@ -97,6 +104,11 @@ EOD
   #+begin_src sh
   prn "Installing Git"
   brew install git
+  
+  # Setup Git
+  prn "Setting up Git"
+  git config --global user.email $user_email
+  git config --global user.name $user_name
   #+end_src
 
 * Install fish shell
@@ -118,7 +130,12 @@ EOD
   # Change shell
   if [ "fish" != $currentshell ]; then
     prn "Setting fish as default shell"
-    chsh -s `which fish`
+    for i in {1..3};
+    do
+      chsh -s `which fish` && break
+      sleep 1;
+      prn "Retrying.."
+    done
   fi
  
   fish --login ./setupnote.fish
