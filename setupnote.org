@@ -1,0 +1,152 @@
+#+PROPERTY: header-args :results output silent
+#+PROPERTY: header-args :tangle yes
+
+* Install HomeBrew
+  Some utilities for the script
+  #+begin_src sh :shebang "#!/bin/bash"
+  Y='\033[1;33m'
+  NC='\033[0m'
+  prn()
+  {
+    text=$1
+    echo -e "${Y}${text}${NC}"
+  }
+  #+end_src
+  Install Homebrew
+  #+begin_src sh
+  if ! command -v brew ; then
+    prn "Installing Homebrew"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  else
+    prn "Homebrew already installed at $(command -v brew)"
+  fi
+  
+  # Don't proceed without brew
+  if ! command -v brew ; then 
+    prn "Homebrew not installed properly. Please reinstall Homebrew. Quitting!!!"
+    exit 1;
+  fi
+
+  #+end_src
+
+* Install Nerd Fonts
+  #+begin_src sh
+  prn "Installing fonts"
+  brew tap homebrew/cask-fonts
+  brew cask install font-hack-nerd-font
+  #+end_src
+
+* Set Terminal Theme
+  #+begin_src sh
+  prn "Setting Termial Theme"
+
+  # taken from https://github.com/mathiasbynens/dotfiles/blob/master/.macos#L626
+  osascript <<EOD
+  tell application "Terminal"
+  	local allOpenedWindows
+  	local initialOpenedWindows
+  	local windowID
+  	set themeName to "BirdsOfParadise"
+
+  	(* Store the IDs of all the open terminal windows. *)
+  	set initialOpenedWindows to id of every window
+
+  	(* Open the custom theme so that it gets added to the list
+  	   of available terminal themes (note: this will open two
+  	   additional terminal windows). *)
+  	do shell script "open './" & themeName & ".terminal'"
+
+  	(* Wait a little bit to ensure that the custom theme is added. *)
+  	delay 1
+
+  	(* Set the custom theme as the default terminal theme. *)
+  	set default settings to settings set themeName
+
+  	(* Get the IDs of all the currently opened terminal windows. *)
+  	set allOpenedWindows to id of every window
+  	repeat with windowID in allOpenedWindows
+
+  		(* Close the additional windows that were opened in order
+  		   to add the custom theme to the list of terminal themes. *)
+  		if initialOpenedWindows does not contain windowID then
+  			close (every window whose id is windowID)
+
+  		(* Change the theme for the initial opened terminal windows
+  		   to remove the need to close them in order for the custom
+  		   theme to be applied. *)
+  		else
+  			set current settings of tabs of (every window whose id is windowID) to settings set themeName
+  		end if
+  	end repeat
+  end tell
+
+EOD
+
+  #+End_src
+
+* Install Git
+  
+  #+begin_src sh
+  prn "Installing Git"
+  brew install git
+  #+end_src
+
+* Install fishshell
+  #+begin_src sh
+  prn "Installing fish"
+  brew install fish
+  #+end_src
+   
+  Set fish as default shell
+  #+begin_src sh
+  currentshell=$(echo $SHELL | tr '/' '\n' | tail -n1)
+   
+  # Checking if fish is added to /etc/shells
+  if ! grep 'fish$' /etc/shells ; then
+    prn "Adding fish to /etc/shells"
+    which fish >> /etc/shells
+  fi
+   
+  # Change shell
+  if [ "fish" != $currentshell ]; then
+    prn "Setting fish as default shell"
+    chsh -s `which fish`
+  fi
+ 
+  fish --login ./setupnote.fish
+  #+end_src
+
+* Utilities for fish shell
+  #+begin_src fish :shebang "#!/usr/bin/env fish"
+  # echo in color
+  function prn
+    echo (set_color -o yellow)$argv(set_color normal)
+  end
+  #+end_src
+* Install OMF
+  #+begin_src fish
+  if ! type -q omf
+    prn "Installing OMF"
+    set temp_file (mktemp)
+     
+    # delete temp file on exit
+    trap "rm -f $temp_file" EXIT
+
+    curl -L https://get.oh-my.fish > $temp_file
+    chmod u+x $temp_file
+    $temp_file --noninteractive
+     
+    # load omf without restarting fish
+    source ~/.config/fish/conf.d/omf.fish
+  else
+    prn "OMF is already installed"
+  end
+  #+end_src
+
+** Install powerline theme - bobthefish
+   #+begin_src fish
+   prn "Installing bobthefish"
+   omf install bobthefish
+   omf reload
+   #+end_src
+* Setup jayemacs

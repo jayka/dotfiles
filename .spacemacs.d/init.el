@@ -33,10 +33,11 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(python
      shell-scripts
      ruby
      html
+     erc
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -48,11 +49,12 @@ This function should only modify configuration layer settings."
           ivy-display-style 'fancy)
      themes-megapack
      theming
+     ;; company
      auto-completion
      ;; better-defaults
      emacs-lisp
      ;; multiple-cursors
-     ;; neotree
+     neotree
      csv
      git
      github
@@ -73,7 +75,8 @@ This function should only modify configuration layer settings."
      go
      python
      yaml
-     confluence
+
+     ;; confluence
      )
 
    ;; List of additional packages that will be installed without being
@@ -83,7 +86,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(all-the-icons exec-path-from-shell)
+   dotspacemacs-additional-packages '(all-the-icons exec-path-from-shell company-quickhelp)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -93,7 +96,8 @@ This function should only modify configuration layer settings."
                                     niflheim-theme
                                     pastels-on-dark-theme
                                     tronesque-theme
-                                    zonokai-theme)
+                                    zonokai-theme
+                                    )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and deletes any unused
@@ -177,7 +181,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-editing-style 'vim
 
    ;; If non-nil output loading progress in `*Messages*' buffer. (default nil)
-   dotspacemacs-verbose-loading nil
+   dotspacemacs-verbose-loading t
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -208,8 +212,9 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light
+   dotspacemacs-themes '(
+                         ;; spacemacs-dark
+                         ;; spacemacs-light
                          gruvbox-dark-medium
                          smyx
                          flatland)
@@ -297,7 +302,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil, the paste transient-state is enabled. While enabled, after you
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
    ;; elements in the `kill-ring'. (default nil)
-   dotspacemacs-enable-paste-transient-state nil
+   dotspacemacs-enable-paste-transient-state t
 
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
@@ -494,7 +499,7 @@ Put your configuration code here, except for variables that  should be set befor
    mac-command-modifier 'meta
    mac-option-modifier 'super
    )
-  (setq powerline-default-separator 'arrow)
+  ;; (setq powerline-default-separator 'arrow)
 
   ;; backup and versions
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -526,7 +531,27 @@ Put your configuration code here, except for variables that  should be set befor
   ;; (setq jit-lock-defer-time 0)
   ;; (setq fast-but-imprecise-scrolling t)
 
+  (setq org-tags-column -120)
+  (setq undo-tree-auto-save-history t)
+  (add-to-list 'undo-tree-history-directory-alist '("~/.emacs.d/.undo-history/"))
+
+  (add-hook 'cider-repl-mode-hook 'ajay/aj-enable-SPC-in-cider-repl)
+
+  ;; set org agenda files
+  (setq org-directory "~/repo/ajays/org")
+  (setq org-agenda-files (list "~/repo/ajays/org/"))
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  ;; org templates
+  (setq org-capture-templates '(("s" "Insert Solution, Impact, Questions." plain (file "") "%[/Users/ajpremkumar/repo/ajays/org/templates/dc.org]")
+                                ("f" "Follow Up" entry (file+headline "" "Follow Ups") "* TODO %t %?")))
   )
 
+(defun ajay/aj-enable-SPC-in-cider-repl ()
+  (evil-define-key 'insert cider-repl-mode-map (kbd "SPC")
+    (defun ajay/aj-other-window ()
+      (interactive)
+      (if (> (point) cider-repl-input-start-mark)
+          (insert " ")
+        (call-interactively #'ace-window)))))
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
