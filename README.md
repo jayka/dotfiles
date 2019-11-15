@@ -1,2 +1,1 @@
-# setup
-all my setup
+# Setup instructions in [setup.org](setup.org)
