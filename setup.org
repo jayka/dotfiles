@@ -7,7 +7,7 @@
   #+begin_src sh :tangle no
   ~/Applications/Emacs.app/Contents/MacOS/Emacs -nw --batch -l org setup.org -f org-babel-tangle
   #+end_src
-  - In Terminal, run ~./setupnote.sh~
+  - In Terminal, run ~./setup.sh~
 
 * Setup Personal Details
   #+begin_src sh
@@ -156,7 +156,7 @@ EOD
     done
   fi
  
-  fish --login ./setupnote.fish
+  fish --login ./setup.fish
   #+end_src
 
 * Utilities for fish shell
