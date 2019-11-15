@@ -35,7 +35,7 @@
   if [ -e $HOME/.emacs.d ]; then
     while true; do
       read -p ".emacs.d directory exists. Do you want to overwrite? (y/N)" yn
-      case yn in
+      case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
         * ) echo "Please answer (y/N)";;
