@@ -1,0 +1,7 @@
+theme bobthefish
+theme default
+
+package bass
+package foreign-env
+package node
+package nvm

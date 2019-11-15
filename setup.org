@@ -185,13 +185,13 @@ EOD
   
   set FULL_BASE_DIR (cd (dirname (status --current-filename)); pwd)
   #+end_src
-* Link my fish functions
+* Link my .config directories
+  We link the configurations directly so that any update/changes can be committed to the setup files directly.
   #+begin_src fish
-  prn "Linking fish functions"
-  set fn_dir "$FULL_BASE_DIR/fish/functions"
-  mkdir $HOME/.config/fish/functions 2>/dev/null
+  prn "Linking .config directories"
+  set fn_dir "$FULL_BASE_DIR/.config"
   for i in (ls $fn_dir)
-    ln -s "$fn_dir/$i" "$HOME/.config/fish/functions/$i"
+    ln -s "$fn_dir/$i" "$HOME/.config/$i"
   end
   #+end_src
 
@@ -208,16 +208,8 @@ EOD
     chmod u+x $temp_file
     $temp_file
      
-    # load omf without restarting fish
-    source $HOME/.config/fish/conf.d/omf.fish
   else
     prn "OMF is already installed"
   end
   #+end_src
 
-** Install powerline theme - bobthefish
-   #+begin_src fish
-   prn "Installing bobthefish"
-   omf install bobthefish
-   omf reload
-   #+end_src
