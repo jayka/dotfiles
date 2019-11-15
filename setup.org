@@ -41,7 +41,8 @@
         * ) echo "Please answer (y/N)";;
       esac
     done
-    
+  fi
+  
   ln -s $FULL_BASE_DIR/jayemacs/ $HOME/.emacs.d
   #+end_src
 
