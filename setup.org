@@ -5,7 +5,7 @@
   - To setup you must have Emacs downloaded. 
   - Run the following command to untangle this Org file.
   #+begin_src sh :tangle no
-  ~/Applications/Emacs.app/Contents/MacOS/Emacs -nw --batch -l org setupnote.org -f org-babel-tangle
+  ~/Applications/Emacs.app/Contents/MacOS/Emacs -nw --batch -l org setup.org -f org-babel-tangle
   #+end_src
   - In Terminal, run ~./setupnote.sh~
 
