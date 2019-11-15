@@ -37,6 +37,14 @@
   FULL_BASE_DIR=$(cd $BASE_DIR; pwd) 
  #+end_src
 
+* Checkout all submodules from setup repo
+  #+begin_src sh
+  prn "Checkout all submodules"
+
+  git submodule update --init --recursive
+
+  #+end_src
+
 * Setup Jayemacs
   #+begin_src sh
   prn "Setting up Jayemacs"
@@ -198,7 +206,7 @@ EOD
 
     curl -L https://get.oh-my.fish > $temp_file
     chmod u+x $temp_file
-    $temp_file --noninteractive
+    $temp_file
      
     # load omf without restarting fish
     source $HOME/.config/fish/conf.d/omf.fish
