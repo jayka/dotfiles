@@ -25,6 +25,14 @@
     echo -e "${Y}${text}${NC}"
   }
   
+  backup_emacs()
+  {
+    rnd=$(date +%s)
+    emacs_bkp=$HOME/.emacs.d.$rnd
+    mv $HOME/.emacs.d $emacs_bkp 
+    prn "Moved existing .emacs.d to $emacs_bkp"
+  }
+  
   BASE_DIR=$(dirname $0)
   FULL_BASE_DIR=$(cd $BASE_DIR; pwd) 
  #+end_src
@@ -36,14 +44,14 @@
     while true; do
       read -p ".emacs.d directory exists. Do you want to overwrite? (y/N)" yn
       case $yn in
-        [Yy]* ) rm -rf $HOME/.emacs.d; break;;
+        [Yy]* ) backup_emacs ; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer (y/N)";;
       esac
     done
   fi
   
-  ln -s $FULL_BASE_DIR/jayemacs/ $HOME/.emacs.d
+  ln -s $FULL_BASE_DIR/jayemacs $HOME/.emacs.d
   #+end_src
 
 * Install Homebrew
@@ -143,7 +151,7 @@ EOD
   # Checking if fish is added to /etc/shells
   if ! grep 'fish$' /etc/shells ; then
     prn "Adding fish to /etc/shells"
-    which fish >> /etc/shells
+    echo `which fish` | sudo tee -a /etc/shells
   fi
    
   # Change shell
@@ -173,6 +181,7 @@ EOD
   #+begin_src fish
   prn "Linking fish functions"
   set fn_dir "$FULL_BASE_DIR/fish/functions"
+  mkdir $HOME/.config/fish/functions 2>/dev/null
   for i in (ls $fn_dir)
     ln -s "$fn_dir/$i" "$HOME/.config/fish/functions/$i"
   end
