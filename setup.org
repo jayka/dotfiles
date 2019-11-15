@@ -10,13 +10,13 @@
   - In Terminal, run ~./setup.sh~
 
 * Setup Personal Details
-  #+begin_src sh
+  #+begin_src sh :shebang "#!/bin/bash"
   read -p "Enter name: " user_name
   read -p "Enter email: " user_email
   #+end_src
 
 * Some utilities for the script
-  #+begin_src sh :shebang "#!/bin/bash"
+  #+begin_src sh
   Y='\033[1;33m'
   NC='\033[0m'
   prn()
