@@ -33,7 +33,15 @@
   #+begin_src sh
   prn "Setting up Jayemacs"
   if [ -e $HOME/.emacs.d ]; then
-    read -c -p ".emacs.d directory exists. Do you want to overwrite? (y/N)" N
+    while true; do
+      read -p ".emacs.d directory exists. Do you want to overwrite? (y/N)" yn
+      case yn in
+        [Yy]* ) break;
+        [Nn]* ) exit 1;
+        * ) echo "Please answer (y/N)"
+      esac
+    done
+    
   ln -s $FULL_BASE_DIR/jayemacs/ $HOME/.emacs.d
   #+end_src
 
