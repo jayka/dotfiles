@@ -60,11 +60,11 @@
       to_f=$from_f;
     fi
 
-    if [ -e $HOME/$f ]; then
+    if [ -e $HOME/$to_f ]; then
       while true; do
-        read -p "$f exists. Will backup $f. Proceed? (y/N)" yn
+        read -p "$to_f exists. Will backup $to_f. Proceed? (y/N)" yn
         case $yn in
-          [Yy]* ) make_backup $f; break;;
+          [Yy]* ) make_backup $to_f; break;;
           [Nn]* ) exit;;
           * ) echo "Please answer (y/N)";;
         esac

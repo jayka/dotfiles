@@ -5,7 +5,7 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "homebrew/cask-fonts"
 
-brew "font-hack-nerd-font"
+cask "font-hack-nerd-font"
 brew "aria2"
 # brew "bash-completion"
 brew "fish"
