@@ -49,7 +49,7 @@
   #+begin_src sh
   prn "Performing Pre-installation setup"
 
-  preinst_file=".Brewfile jayemacs,.emacs.d"
+  preinst_file="jayemacs,.emacs.d"
 
   for f in $preinst_file; do
 
@@ -92,6 +92,13 @@
  fi
 
  #+end_src
+
+* Install Homebrew bundles
+  #+begin_src sh
+  prn "Installing Homebrew bundles"
+
+  brew bundle --file=$FULL_BASE_DIR/.Brewfile
+  #+end_src
 
 * Set Terminal Theme
   #+begin_src sh
