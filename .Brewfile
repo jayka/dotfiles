@@ -3,7 +3,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
 tap "homebrew/services"
-tap homebrew/cask-fonts
+tap "homebrew/cask-fonts"
 
 brew "font-hack-nerd-font"
 brew "aria2"
