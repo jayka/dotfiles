@@ -7,11 +7,13 @@ tap homebrew/cask-fonts
 
 brew "font-hack-nerd-font"
 brew "aria2"
-brew "bash-completion"
+# brew "bash-completion"
 brew "fish"
 brew "git"
 brew "go"
-brew "gradle"
+
+#brew "gradle"
+
 brew "leiningen"
 brew "openssl"
 brew "sqlite"
