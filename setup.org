@@ -25,12 +25,12 @@
     echo -e "${Y}${text}${NC}"
   }
   
-  backup_emacs()
+  make_backup()
   {
     rnd=$(date +%s)
-    emacs_bkp=$HOME/.emacs.d.$rnd
-    mv $HOME/.emacs.d $emacs_bkp 
-    prn "Moved existing .emacs.d to $emacs_bkp"
+    bkp=$HOME/$1.$rnd
+    mv $HOME/$1 $bkp 
+    prn "Moved existing $1 to $bkp"
   }
   
   BASE_DIR=$(dirname $0)
@@ -45,21 +45,35 @@
 
   #+end_src
 
-* Setup Jayemacs
+* Pre-installation setup
   #+begin_src sh
-  prn "Setting up Jayemacs"
-  if [ -e $HOME/.emacs.d ]; then
-    while true; do
-      read -p ".emacs.d directory exists. Do you want to overwrite? (y/N)" yn
-      case $yn in
-        [Yy]* ) backup_emacs ; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer (y/N)";;
-      esac
-    done
-  fi
-  
-  ln -s $FULL_BASE_DIR/jayemacs $HOME/.emacs.d
+  prn "Performing Pre-installation setup"
+
+  preinst_file=".Brewfile jayemacs,.emacs.d"
+
+  for f in $preinst_file; do
+
+    from_f=$(echo $f | cut -d ',' -f 1)
+    to_f=$(echo $f | cut -d ',' -f 2)
+
+    if [ -z $to_f ]; then
+      to_f=$from_f;
+    fi
+
+    if [ -e $HOME/$f ]; then
+      while true; do
+        read -p "$f exists. Will backup $f. Proceed? (y/N)" yn
+        case $yn in
+          [Yy]* ) make_backup $f; break;;
+          [Nn]* ) exit;;
+          * ) echo "Please answer (y/N)";;
+        esac
+      done
+    fi
+
+    ln -s $FULL_BASE_DIR/$from_f $HOME/$to_f
+  done
+
   #+end_src
 
 * Install Homebrew
