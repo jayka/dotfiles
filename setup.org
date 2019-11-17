@@ -93,13 +93,6 @@
 
  #+end_src
 
-* Install Nerd Fonts
-  #+begin_src sh
-  prn "Installing fonts"
-  brew tap homebrew/cask-fonts
-  brew cask install font-hack-nerd-font
-  #+end_src
-
 * Set Terminal Theme
   #+begin_src sh
   prn "Setting Termial Theme"
@@ -148,24 +141,6 @@ EOD
 
   #+end_src
 
-* Install Git
-  
-  #+begin_src sh
-  prn "Installing Git"
-  brew install git
-  
-  # Setup Git
-#  prn "Setting up Git"
-#  git config --global user.email $user_email
-#  git config --global user.name $user_name
-  #+end_src
-
-* Install fish shell
-  #+begin_src sh
-  prn "Installing fish"
-  brew install fish
-  #+end_src
-   
 ** Set fish as default shell
   #+begin_src sh
   currentshell=$(echo $SHELL | tr '/' '\n' | tail -n1)
