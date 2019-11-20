@@ -49,7 +49,7 @@
   #+begin_src sh
   prn "Performing Pre-installation setup"
 
-  preinst_file="jayemacs,.emacs.d"
+  preinst_file="jayemacs,.emacs.d .config/fish .config/omf"
 
   for f in $preinst_file; do
 
@@ -180,15 +180,6 @@ EOD
   end
   
   set FULL_BASE_DIR (cd (dirname (status --current-filename)); pwd)
-  #+end_src
-* Link my .config directories
-  We link the configurations directly so that any update/changes can be committed to the setup files directly.
-  #+begin_src fish
-  prn "Linking .config directories"
-  set fn_dir "$FULL_BASE_DIR/.config"
-  for i in (ls $fn_dir)
-    ln -s "$fn_dir/$i" "$HOME/.config/$i"
-  end
   #+end_src
 
 * Install OMF
