@@ -1,6 +1,5 @@
  
 package bass
 package foreign-env
-package node
 theme bobthefish
 theme default
