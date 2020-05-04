@@ -5,7 +5,7 @@
   - To setup you must have Emacs downloaded. 
   - Run the following command to untangle this Org file.
   #+begin_src sh :tangle no
-  ~/Applications/Emacs.app/Contents/MacOS/Emacs -nw --batch -l org setup.org -f org-babel-tangle
+  /Applications/Emacs.app/Contents/MacOS/Emacs -nw --batch -l org setup.org -f org-babel-tangle
   #+end_src
   - In Terminal, run ~./setup.sh~
 
@@ -49,7 +49,7 @@
   #+begin_src sh
   prn "Performing Pre-installation setup"
 
-  preinst_file="jayemacs,.emacs.d .config/fish .config/omf"
+  preinst_file="jayemacs,.emacs.d .config/fish .config/omf Brewfile"
 
   for f in $preinst_file; do
 
@@ -97,7 +97,7 @@
   #+begin_src sh
   prn "Installing Homebrew bundles"
 
-  brew bundle --file=$FULL_BASE_DIR/.Brewfile
+  brew bundle --file=$FULL_BASE_DIR/Brewfile
   #+end_src
 
 * Set Terminal Theme
