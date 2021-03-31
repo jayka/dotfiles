@@ -18,4 +18,4 @@ alias gidc 'git diff --cached'
 alias gifu 'git fetch upstream'
 alias gifo 'git fetch origin'
 
-alias e '/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+alias emacs '~/Applications/Emacs.app/Contents/MacOS/Emacs -nw'

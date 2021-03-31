@@ -11,3 +11,4 @@
 [submodule "jayemacs"]
 	path = jayemacs
 	url = git@github.com:jayka/jayemacs.git
+	branch = master
