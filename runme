@@ -1,12 +1,14 @@
 #!/bin/sh
 
-EMACS="Contents/MacOS/Emacs"
+if [[ "$OSTYPE" == "darwin"* ]]; then
 
-if (test -e "/Applications/Emacs.app") ; then
-  /Applications/Emacs.app/$EMACS -nw --batch -l org setup.org -f org-babel-tangle
-elif (test -e "$HOME/Applications/Emacs.app") ; then
-  $HOME/Applications/Emacs.app/$EMACS -nw --batch -l org setup.org -f org-babel-tangle
-else
-  echo "Unable to locate Emacs"
+    if (test -e "/Applications/Emacs.app") ; then
+        EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs"
+
+    elif (test -e "$HOME/Applications/Emacs.app") ; then
+        EMACS="$HOME/Applications/Emacs.app/Contents/MacOS/Emacs"
+    fi
 fi
 
+echo $EMACS
+$EMACS -nw --batch -l org setup.org -f org-babel-tangle
