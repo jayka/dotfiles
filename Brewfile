@@ -25,7 +25,7 @@ brew "telnet"
 brew "the_silver_searcher"
 brew "yarn"
 brew "shopify/shopify/themekit"
-brew romkatv/powerlevel10k/powerlevel10k
+brew "romkatv/powerlevel10k/powerlevel10k"
 cask "font-hack-nerd-font"
 cask "inkscape"
 cask "xquartz"
