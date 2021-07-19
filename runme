@@ -12,3 +12,7 @@ fi
 
 echo $EMACS
 $EMACS -nw --batch -l org setup.org -f org-babel-tangle
+
+echo Setting up...
+
+./setup.sh

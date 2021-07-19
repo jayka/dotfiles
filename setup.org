@@ -43,33 +43,34 @@
 
 * Pre-installation setup
   #+begin_src sh
-  prn "Performing Pre-installation setup"
-
-  preinst_file="emacs.d,.emacs.d Brewfile"
-
-  for f in $preinst_file; do
-
-    from_f=$(echo $f | cut -d ',' -f 1)
-    to_f=$(echo $f | cut -d ',' -f 2)
-
-    if [ -z $to_f ]; then
-      to_f=$from_f;
-    fi
-
-    if [ -e $HOME/$to_f ]; then
-      while true; do
-        read -p "$to_f exists. Will backup $to_f. Proceed? (y/N)" yn
-        case $yn in
-          [Yy]* ) make_backup $to_f; break;;
-          [Nn]* ) exit;;
-          * ) echo "Please answer (y/N)";;
-        esac
-      done
-    fi
-
-    ln -s $FULL_BASE_DIR/$from_f $HOME/$to_f
-  done
-
+    prn "Performing Pre-installation setup"
+    
+    preinst_file="emacs.d,.emacs.d Brewfile .bashrc .bash_profile .inputrc starship.toml,.config/starship.toml"
+    
+    for f in $preinst_file; do
+    
+      from_f=$(echo $f | cut -d ',' -f 1)
+      to_f=$(echo $f | cut -d ',' -f 2)
+    
+      if [ -z $to_f ]; then
+        to_f=$from_f;
+      fi
+    
+      if [ -e $HOME/$to_f ]; then
+        while true; do
+          read -p "$to_f exists. Will backup $to_f. Proceed? (y/N -default)" yn
+          case $yn in
+            [Yy]* ) make_backup $to_f; ln -s $FULL_BASE_DIR/$from_f $HOME/$to_f; break;;
+            ,* ) echo "Skipping $to_f ..."; break;;
+          esac
+        done
+      else
+        prn "Creating $to_f ..."
+        ln -s $FULL_BASE_DIR/$from_f $HOME/$to_f;
+      fi
+    
+    done
+    
   #+end_src
 
 * Install Homebrew
@@ -93,11 +94,11 @@
   #+begin_src sh
   prn "Installing Homebrew bundles"
 
-  brew bundle --file=$FULL_BASE_DIR/Brewfile
+  brew bundle --file=$FULL_BASE_DIR/Brewfile --verbose
   #+end_src
 
 * Set Terminal Theme
-  #+begin_src sh
+  #+begin_src text
   prn "Setting Termial Theme"
 
   # taken from https://github.com/mathiasbynens/dotfiles/blob/master/.macos#L626
@@ -146,25 +147,22 @@ EOD
 
 ** Set zsh as default shell
   #+begin_src sh
-  currentshell=$(echo $SHELL | tr '/' '\n' | tail -n1)
-   
-  # Change shell
-  if [ "zsh" != $currentshell ]; then
-    prn "Setting zsh as default shell"
+    currentshell=$(echo $SHELL | tr '/' '\n' | tail -n1)
+    
+    # Checking if fish is added to /etc/shells
+    if ! grep '/usr/local/bin/bash' /etc/shells ; then
+      prn "Adding latest BASH to /etc/shells"
+      echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
+    fi
+    
+    # Change shell
+    prn "Setting BASH as default shell"
     for i in {1..3};
     do
-      chsh -s `which zsh` && break
+      chsh -s '/usr/local/bin/bash' && break
       sleep 1;
       prn "Retrying.."
     done
-  fi
- 
-  #+end_src
+    
 
-  
-* Install NVM and node
-  #+begin_src sh
-  prn "Installng nvm"
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-  nvm install stable
   #+end_src
