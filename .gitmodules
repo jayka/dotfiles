@@ -3,4 +3,4 @@
 	url = git@gist.github.com:a3b4a6bb92a8e4b9fd487e77f2aa8b64.git
 [submodule "emacs.d"]
 	path = emacs.d
-	url = git@github.com:jayka/jayemacs.git
+	url = https://github.com/jayka/jayemacs.git
